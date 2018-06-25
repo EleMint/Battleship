@@ -71,6 +71,13 @@ namespace BattleShip
             this.PlaceAircraftCarrier(player1, player1.playerBoard);
             this.PlaceSubmarine(player1, player1.playerBoard);
             this.PlaceDestroyer(player1, player1.playerBoard);
+            Console.Clear();
+            player2.playerBoard.DisplayBoard();
+            this.PlaceBattleShip(player2, player2.playerBoard);
+            this.PlaceAircraftCarrier(player2, player2.playerBoard);
+            this.PlaceSubmarine(player2, player2.playerBoard);
+            this.PlaceDestroyer(player2, player2.playerBoard);
+            Console.Clear();
 
             //check input validity
             //pass ship into ShipPlacement()
@@ -79,14 +86,15 @@ namespace BattleShip
         
         public void PlaceBattleShip(Player player, GameBoard playerBoard)
         {
-            Console.WriteLine("Enter Starting Location Of BattleShip: ");
+            Console.WriteLine(player.name + ", Please Enter Starting Location Of BattleShip: ");
             string battleShip = Console.ReadLine();
             Console.WriteLine("Enter Its Orientation: \r\n('Up', 'Down', 'Left', 'Right')");
             string battleShipOrientation = Console.ReadLine();
             bool isValid = ValidPlacement(player.battleShip, player.MoveInterpritation(battleShip), battleShipOrientation);
             if(isValid)
             {
-                playerBoard.UpdateBoard(player.MoveInterpritation(battleShip));
+                player.ShipPlacement(player.battleShip, battleShipOrientation, player.MoveInterpritation(battleShip));
+                playerBoard.DisplayBoard();
             }
             else
             {
@@ -102,7 +110,8 @@ namespace BattleShip
             bool isValid = ValidPlacement(player.aircraftCarrier, player.MoveInterpritation(aircraftShip), aircraftOrientation);
             if (isValid)
             {
-                playerBoard.UpdateBoard(player.MoveInterpritation(aircraftShip));
+                player.ShipPlacement(player.aircraftCarrier, aircraftOrientation, player.MoveInterpritation(aircraftShip));
+                playerBoard.DisplayBoard();
             }
             else
             {
@@ -118,7 +127,8 @@ namespace BattleShip
             bool isValid = ValidPlacement(player.submarine, player.MoveInterpritation(submarine), submarineOrientation);
             if (isValid)
             {
-                playerBoard.UpdateBoard(player.MoveInterpritation(submarine));
+                player.ShipPlacement(player.submarine, submarineOrientation, player.MoveInterpritation(submarine));
+                playerBoard.DisplayBoard();
             }
             else
             {
@@ -131,10 +141,11 @@ namespace BattleShip
             string destroyerShip = Console.ReadLine();
             Console.WriteLine("Enter Its Orientation: \r\n('Up', 'Down', 'Left', 'Right')");
             string destroyerOrientation = Console.ReadLine();
-            bool isValid = ValidPlacement(player.submarine, player.MoveInterpritation(destroyerShip), destroyerOrientation);
+            bool isValid = ValidPlacement(player.destroyer, player.MoveInterpritation(destroyerShip), destroyerOrientation);
             if (isValid)
             {
-                playerBoard.UpdateBoard(player.MoveInterpritation(destroyerShip));
+                player.ShipPlacement(player.destroyer, destroyerOrientation, player.MoveInterpritation(destroyerShip));
+                playerBoard.DisplayBoard();
             }
             else
             {
@@ -150,23 +161,39 @@ namespace BattleShip
 
         public bool ValidPlacement(Ships ship, int[] startLocation, string shipOrientation)
         {
-            if (shipOrientation == "left" || shipOrientation == "right")
+            Console.Write(startLocation[1]);
+            Console.Write(startLocation[0]);
+            Console.WriteLine();
+
+            switch(shipOrientation)
             {
-                if (startLocation[0] - ship.length <= 0 || startLocation[0] + ship.length >= 21)
-                {
+                case "left":
+                    if(startLocation[0] - ship.length <= 0)
+                    {
+                        return false;
+                    }
+                    else return true;
+                case "right":
+                    if (startLocation[0] + ship.length >= 21)
+                    {
+                        return false;
+                    }
+                    else return true;
+                case "up":
+                    if (startLocation[1] - ship.length <= 0)
+                    {
+                        return false;
+                    }
+                    else return true;
+                case "down":
+                    if (startLocation[1] + ship.length >= 21)
+                    {
+                        return false;
+                    }
+                    else return true;
+                default:
                     return false;
-                }
-                else return true;
             }
-            else if (shipOrientation == "up" || shipOrientation == "down")
-            {
-                if (startLocation[1] <= 0 - ship.length || startLocation[1] + ship.length >= 21)
-                {
-                    return false;
-                }
-                else return true;
-            }
-            else return false;
         }
 
     }

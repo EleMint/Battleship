@@ -45,7 +45,7 @@ namespace BattleShip
         // Member Methods
         public void UpdateBoard(int[] move)
         {
-            gameBoard[move[0], move[1]] = "[x]";
+            //gameBoard[move[0], move[1]] = "[x]";
             this.DisplayBoard();
 
         }
