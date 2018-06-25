@@ -1,0 +1,7 @@
+D:\DevCodeCamp\Projects\BattleShip\BattleShip\bin\Debug\BattleShip.exe.config
+D:\DevCodeCamp\Projects\BattleShip\BattleShip\bin\Debug\BattleShip.exe
+D:\DevCodeCamp\Projects\BattleShip\BattleShip\bin\Debug\BattleShip.pdb
+D:\DevCodeCamp\Projects\BattleShip\BattleShip\obj\Debug\BattleShip.csprojAssemblyReference.cache
+D:\DevCodeCamp\Projects\BattleShip\BattleShip\obj\Debug\BattleShip.csproj.CoreCompileInputs.cache
+D:\DevCodeCamp\Projects\BattleShip\BattleShip\obj\Debug\BattleShip.exe
+D:\DevCodeCamp\Projects\BattleShip\BattleShip\obj\Debug\BattleShip.pdb
