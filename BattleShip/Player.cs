@@ -17,7 +17,7 @@ namespace BattleShip
         public Ships destroyer;
         public Ships aircraftCarrier;
         public Ships submarine;
-        public List<int[]> shipPlacements = new List<int[]> { };
+        public List<int[]> shipPlacements;
         public List<string> xAxis = new List<string>
         {
             "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t"
@@ -35,13 +35,15 @@ namespace BattleShip
             aircraftCarrier = new AircraftCarrier();
             submarine = new Submarine();
             totalGuesses = new List<int[]> { };
+            shipPlacements = new List<int[]> { };
+            hits = new List<int[]> { };
 
         }
         // Member Methods
-        public void ShipPlacement(Ships ship, string shipOrientation, int[] startLocation)
+        public void ShipPlacement(Player guesser, Ships ship, string shipOrientation, int[] startLocation)
         {
             playerBoard.gameBoard[startLocation[0], startLocation[1]] = ship.abbreviation;
-            shipPlacements.Add(startLocation);
+            guesser.shipPlacements.Add(startLocation);
             switch (shipOrientation)
             {
                 case "left":
@@ -57,7 +59,9 @@ namespace BattleShip
                     {
                         int[] nextLocation = new int[] { startLocation[1] + i, startLocation[0] };
                         playerBoard.gameBoard[nextLocation[1], nextLocation[0]] = ship.abbreviation;
-                        shipPlacements.Add(nextLocation);
+                        guesser.shipPlacements.Add(nextLocation);
+                        Console.WriteLine(shipPlacements);
+                        Console.WriteLine(nextLocation[0] + " "+ nextLocation[1]);
                     }
                     break;
                 case "up":
@@ -82,7 +86,7 @@ namespace BattleShip
         {
             Console.WriteLine("Please enter a valid move (Example: 'D 12')");
             int[] move = MoveInterpritation(Console.ReadLine());
-            opponentBoard.UpdateBoard(move);
+            opponentBoard.DisplayBoard();
 
 
         }
@@ -103,9 +107,9 @@ namespace BattleShip
             return moves;
         }
 
-        public virtual void PlayerGuess(GameBoard playerBoard)
+        public virtual void PlayerGuess(Player guesser, Player opponent, GameBoard playerBoard)
         {
-            Console.WriteLine("Enter a valid guess");
+            Console.WriteLine($"{guesser.name} Enter A Guess Location:");
             string guessMove = Console.ReadLine().ToLower().Trim();
             int[] MoveThing = MoveInterpritation(guessMove);
             for(int i = 0; i<totalGuesses.Count; i++)
@@ -113,7 +117,7 @@ namespace BattleShip
                 if(totalGuesses[i] == MoveThing)
                 {
                     Console.WriteLine("Please enter a valid choice");
-                    PlayerGuess(playerBoard);
+                    PlayerGuess(guesser, opponent, playerBoard);
                 }
                 else
                 {
@@ -121,11 +125,29 @@ namespace BattleShip
 
                 }
             }
+            guesser.HitChecker(MoveThing, guesser, opponent);
+            guesser.opponentBoard.DisplayBoard();
         }
 
-        public virtual void HitChecker(int[] moveCheck)
+        public virtual void HitChecker(int[] moveCheck, Player guesser, Player opponent)
         {
-            for(int i = 0; i)
+            for(int i = 0; i < opponent.shipPlacements.Count; i++)
+            {
+                if (moveCheck[0] == opponent.shipPlacements[i][0] && moveCheck[1] == opponent.shipPlacements[i][1])
+                {
+                    guesser.hits.Add(moveCheck);
+                    guesser.opponentBoard.gameBoard[moveCheck[0], moveCheck[1]] = "[X]";
+                    opponent.playerBoard.gameBoard[moveCheck[0], moveCheck[1]] = "[X]";
+                    UI.DisplayHit();
+                    break;
+                }
+                else
+                {
+                    guesser.opponentBoard.gameBoard[moveCheck[0], moveCheck[1]] = "[O]";
+                    opponent.playerBoard.gameBoard[moveCheck[0], moveCheck[1]] = "[O]";
+                    UI.DisplayMiss();
+                }
+            }
         }
     }
 }

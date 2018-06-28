@@ -43,12 +43,11 @@ namespace BattleShip
 
 
         // Member Methods
-        public void UpdateBoard(int[] move)
-        {
-            //gameBoard[move[0], move[1]] = "[x]";
-            this.DisplayBoard();
-
-        }
+        //public bool Equals(int[] int1, int[] int2)
+        //{
+        //    Console.WriteLine("This is the equals overload");
+        //    return true;
+        //}
         public void DisplayBoard()
         {
             for(int i = 0; i <=20; i++)
