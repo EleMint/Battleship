@@ -16,11 +16,6 @@ namespace BattleShip
             this.name = name;
         }
 
-        // Member Methods
-        //public override void PickShipsLocation(string shipName, int shipLength)
-        //{
-
-        //}
-
+      // TODO: 
     }
 }

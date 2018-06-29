@@ -68,7 +68,6 @@ namespace BattleShip
 
         public void MainGame()
         {
-
             this.PlaceShip(player1, player1.battleShip);
             this.PlaceShip(player1, player1.aircraftCarrier);
             this.PlaceShip(player1, player1.submarine);
