@@ -112,7 +112,7 @@ namespace BattleShip
             string shipOrientation = Console.ReadLine();
             //TODO: Validate
             isValid = ValidPlacement(ship, player.MoveInterpritation(shipPlacement), shipOrientation);
-            if (player.shipPlacements.Count>0)
+            if (player.shipPlacements.Count>0 && isValid == true)
             {
                 isValid = CheckOverlappingShips(player, ship, player.MoveInterpritation(shipPlacement), shipOrientation);
             }
