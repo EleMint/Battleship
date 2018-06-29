@@ -27,9 +27,9 @@ namespace BattleShip
             int numberOfComputers;
             bool correctMode;
             this.PickGameType();
-                         
+
             Console.WriteLine("\r\nWelcome To: BattleShip");
-            
+
             do
             {
                 Console.WriteLine("\r\n" + "Press '1' for Single-Player, '2' for Multi-Player, or '3' for A Show Down Between Computers.");
@@ -68,12 +68,12 @@ namespace BattleShip
 
         public void MainGame()
         {
-            
+
             this.PlaceShip(player1, player1.battleShip);
             //this.PlaceShip(player1, player1.aircraftCarrier);
             //this.PlaceShip(player1, player1.submarine);
             //this.PlaceShip(player1, player1.destroyer);
-            Console.WriteLine(player1.shipPlacements[0]+ " "+ player1.shipPlacements[1]);
+            Console.WriteLine(player1.shipPlacements[0] + " " + player1.shipPlacements[1]);
             Console.ReadLine();
             Console.Clear();
             this.PlaceShip(player2, player2.battleShip);
@@ -91,12 +91,13 @@ namespace BattleShip
             }
             while (!gameOver);
             Console.WriteLine("Game is over");
+            Console.ReadLine();
             //check input validity
             //pass ship into ShipPlacement()
             //
         }
-        
-        
+
+
         public void PlaceShip(Player player, Ships ship)
         {
             bool isValid = false;
@@ -105,7 +106,7 @@ namespace BattleShip
             Console.WriteLine("Enter Its Orientation: \r\n('Up', 'Down', 'Left', 'Right')");
             string shipOrientation = Console.ReadLine();
             isValid = ValidPlacement(ship, player.MoveInterpritation(shipPlacement), shipOrientation);
-            if(isValid)
+            if (isValid)
             {
                 player.ShipPlacement(player, ship, shipOrientation, player.MoveInterpritation(shipPlacement));
                 player.playerBoard.DisplayBoard();
@@ -115,7 +116,7 @@ namespace BattleShip
                 this.PlaceShip(player, ship);
             }
         }
-        
+
 
         public void PickGameType()
         {
@@ -129,10 +130,10 @@ namespace BattleShip
             Console.Write(startLocation[0]);
             Console.WriteLine();
 
-            switch(shipOrientation)
+            switch (shipOrientation)
             {
                 case "left":
-                    if(startLocation[1] - ship.length <= 1)
+                    if (startLocation[1] - ship.length <= 1)
                     {
                         return false;
                     }
@@ -161,37 +162,11 @@ namespace BattleShip
         }
         public bool IsGameOver(Player player1, Player player2)
         {
-            int counter1 = 0;
-            int counter2 = 0;
-
-            for(int i = 0; i < player1.shipPlacements.Count; i++)
-            {
-                for(int j = 0; j < 14; j++)
-                {
-                    if(player1.shipPlacements[i] == player2.hits[j])
-                    {
-                        counter1++;
-                    }
-                }
-            }
-            for (int i = 0; i < player2.shipPlacements.Count; i++)
-            {
-                for (int j = 0; j < 14; j++)
-                {
-                    if (player2.shipPlacements[i] == player1.hits[j])
-                    {
-                        counter2++;
-                    }
-                }
-            }
-
-            if (counter1 == 14 || counter2 == 14)
+            if (player1.hits.Count == 14 || player2.hits.Count == 14)
             {
                 return true;
             }
             return false;
-            
         }
-
     }
 }
