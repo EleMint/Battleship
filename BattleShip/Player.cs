@@ -84,7 +84,31 @@ namespace BattleShip
                     break;
             }
         }
-        public virtual void MakeMove()
+        public virtual void PlaceShip(Player player, Ships ship)
+        {
+            bool isValid = false;
+            Console.WriteLine($"{player.name} Enter Starting Location Of {ship.name}");
+            string shipPlacement = Console.ReadLine();
+            //TODO: Validate
+            Console.WriteLine("Enter Its Orientation: \r\n('Up', 'Down', 'Left', 'Right')");
+            string shipOrientation = Console.ReadLine();
+            //TODO: Validate
+            isValid = Game.ValidPlacement(ship, player.MoveInterpritation(shipPlacement), shipOrientation);
+            if (player.shipPlacements.Count > 0 && isValid == true)
+            {
+                isValid = Game.CheckOverlappingShips(player, ship, player.MoveInterpritation(shipPlacement), shipOrientation);
+            }
+            if (isValid)
+            {
+                player.ShipPlacement(player, ship, shipOrientation, player.MoveInterpritation(shipPlacement));
+                player.playerBoard.DisplayBoard();
+            }
+            else
+            {
+                this.PlaceShip(player, ship);
+            }
+        }
+        public void MakeMove()
         {
             Console.WriteLine("Please enter a valid move (Example: 'D 12')");
             int[] move = MoveInterpritation(Console.ReadLine());
@@ -139,7 +163,6 @@ namespace BattleShip
             {
                 if (moveCheck[0] == opponent.shipPlacements[i][0] && moveCheck[1] == opponent.shipPlacements[i][1])
                 {
-                    Console.WriteLine($"opponent ship placement 0: {opponent.shipPlacements[0][0]},{opponent.shipPlacements[0][1]} opponent ship placement 1: {opponent.shipPlacements[1][0]},{opponent.shipPlacements[1][1]} opponent ship placement 2: {opponent.shipPlacements[2][0]},{opponent.shipPlacements[2][1]} opponent ship placement 3: {opponent.shipPlacements[3][0]}{opponent.shipPlacements[3][1]}");
                     guesser.hits.Add(moveCheck);
                     guesser.opponentBoard.gameBoard[moveCheck[0], moveCheck[1]] = "[X]";
                     opponent.playerBoard.gameBoard[moveCheck[0], moveCheck[1]] = "[X]";

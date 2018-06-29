@@ -14,6 +14,7 @@ namespace BattleShip
         public GameBoard player1GameBoard;
         public GameBoard player2GameBoard;
         public bool gameOver;
+        public static Random rng = new Random();
         // Constructor
         public Game()
         {
@@ -69,16 +70,16 @@ namespace BattleShip
         public void MainGame()
         {
 
-            this.PlaceShip(player1, player1.battleShip);
-            this.PlaceShip(player1, player1.aircraftCarrier);
-            this.PlaceShip(player1, player1.submarine);
-            this.PlaceShip(player1, player1.destroyer);
+            player1.PlaceShip(player1, player1.battleShip);
+            player1.PlaceShip(player1, player1.aircraftCarrier);
+            player1.PlaceShip(player1, player1.submarine);
+            player1.PlaceShip(player1, player1.destroyer);
             Console.ReadLine();
             Console.Clear();
-            this.PlaceShip(player2, player2.battleShip);
-            this.PlaceShip(player2, player2.aircraftCarrier);
-            this.PlaceShip(player2, player2.submarine);
-            this.PlaceShip(player2, player2.destroyer);
+            player2.PlaceShip(player2, player2.battleShip);
+            player2.PlaceShip(player2, player2.aircraftCarrier);
+            player2.PlaceShip(player2, player2.submarine);
+            player2.PlaceShip(player2, player2.destroyer);
             Console.ReadLine();
             Console.Clear();
             do
@@ -97,35 +98,12 @@ namespace BattleShip
                 }
             }
             while (!gameOver);
-            Console.WriteLine("Game is over");
+            Console.WriteLine("Game is over"); 
             Console.ReadLine();
         }
 
 
-        public void PlaceShip(Player player, Ships ship)
-        {
-            bool isValid = false;
-            Console.WriteLine($"{player.name} Enter Starting Location Of {ship.name}");
-            string shipPlacement = Console.ReadLine();
-            //TODO: Validate
-            Console.WriteLine("Enter Its Orientation: \r\n('Up', 'Down', 'Left', 'Right')");
-            string shipOrientation = Console.ReadLine();
-            //TODO: Validate
-            isValid = ValidPlacement(ship, player.MoveInterpritation(shipPlacement), shipOrientation);
-            if (player.shipPlacements.Count>0 && isValid == true)
-            {
-                isValid = CheckOverlappingShips(player, ship, player.MoveInterpritation(shipPlacement), shipOrientation);
-            }
-            if (isValid)
-            {
-                player.ShipPlacement(player, ship, shipOrientation, player.MoveInterpritation(shipPlacement));
-                player.playerBoard.DisplayBoard();
-            }
-            else
-            {
-                this.PlaceShip(player, ship);
-            }
-        }
+        
 
 
         public void PickGameType()
@@ -134,7 +112,7 @@ namespace BattleShip
             gameBoard1.DisplayBoard();
         }
 
-        public bool ValidPlacement(Ships ship, int[] startLocation, string shipOrientation)
+        static public bool ValidPlacement(Ships ship, int[] startLocation, string shipOrientation)
         {
             switch (shipOrientation)
             {
@@ -166,7 +144,7 @@ namespace BattleShip
                     return false;
             }
         }
-        public bool CheckOverlappingShips(Player player, Ships ship, int[] startLocation, string shipOrientation)
+        static public bool CheckOverlappingShips(Player player, Ships ship, int[] startLocation, string shipOrientation)
         {
             List<int[]> currentPlacement = new List<int[]> { };
             switch (shipOrientation)
@@ -217,10 +195,12 @@ namespace BattleShip
         {
             if(player1.sunkBools[0] == true && player1.sunkBools[1] == true && player1.sunkBools[2] == true && player1.sunkBools[3] == true )
             {
+                Console.WriteLine($"{player1.name} Won!");
                 return true;
             }
             if (player2.sunkBools[0] == true && player2.sunkBools[1] == true && player2.sunkBools[2] == true && player2.sunkBools[3] == true)
             {
+                Console.WriteLine($"{player2.name} Won!");
                 return true;
             }
             return false;
