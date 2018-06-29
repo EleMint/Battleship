@@ -23,6 +23,7 @@ namespace BattleShip
             this.name = name;
         }
 
+<<<<<<< HEAD
         public override void PlayerGuess(Player guesser, Player opponent, GameBoard playerBoard)
         {
             int[] place =new int[] {0 };
@@ -219,5 +220,8 @@ namespace BattleShip
 
         //}
 
+=======
+      // TODO: 
+>>>>>>> 721323de0a49df0da4cb7a4cdb5ad1fac80028b3
     }
 }

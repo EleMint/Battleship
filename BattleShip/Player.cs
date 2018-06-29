@@ -42,7 +42,7 @@ namespace BattleShip
 
         }
         // Member Methods
-        public void ShipPlacement(Player guesser, Ships ship, string shipOrientation, int[] startLocation)
+        public virtual void ShipPlacement(Player guesser, Ships ship, string shipOrientation, int[] startLocation)
         {
             playerBoard.gameBoard[startLocation[0], startLocation[1]] = ship.abbreviation;
             switch (shipOrientation)

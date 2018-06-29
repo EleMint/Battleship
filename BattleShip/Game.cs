@@ -69,11 +69,18 @@ namespace BattleShip
 
         public void MainGame()
         {
+<<<<<<< HEAD
 
             player1.PlaceShip(player1, player1.battleShip);
             player1.PlaceShip(player1, player1.aircraftCarrier);
             player1.PlaceShip(player1, player1.submarine);
             player1.PlaceShip(player1, player1.destroyer);
+=======
+            this.PlaceShip(player1, player1.battleShip);
+            this.PlaceShip(player1, player1.aircraftCarrier);
+            this.PlaceShip(player1, player1.submarine);
+            this.PlaceShip(player1, player1.destroyer);
+>>>>>>> 721323de0a49df0da4cb7a4cdb5ad1fac80028b3
             Console.ReadLine();
             Console.Clear();
             player2.PlaceShip(player2, player2.battleShip);
