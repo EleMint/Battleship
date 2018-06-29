@@ -13,6 +13,7 @@ namespace BattleShip
             name = "Destroyer";
             length = 2;
             abbreviation = "[D]";
+            hitsOnShip = 0;
         }
     }
 }

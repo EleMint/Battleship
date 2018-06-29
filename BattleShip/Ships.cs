@@ -11,6 +11,7 @@ namespace BattleShip
         public string name;
         public int length;
         public string abbreviation;
+        public int hitsOnShip;
 
         
     }

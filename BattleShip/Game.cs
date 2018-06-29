@@ -70,31 +70,35 @@ namespace BattleShip
         {
 
             this.PlaceShip(player1, player1.battleShip);
-            //this.PlaceShip(player1, player1.aircraftCarrier);
-            //this.PlaceShip(player1, player1.submarine);
-            //this.PlaceShip(player1, player1.destroyer);
-            Console.WriteLine(player1.shipPlacements[0] + " " + player1.shipPlacements[1]);
+            this.PlaceShip(player1, player1.aircraftCarrier);
+            this.PlaceShip(player1, player1.submarine);
+            this.PlaceShip(player1, player1.destroyer);
             Console.ReadLine();
             Console.Clear();
             this.PlaceShip(player2, player2.battleShip);
-            //this.PlaceShip(player2, player2.aircraftCarrier);
-            //this.PlaceShip(player2, player2.submarine);
-            //this.PlaceShip(player2, player2.destroyer);
-            Console.WriteLine(player2.shipPlacements[0] + " " + player2.shipPlacements[1]);
+            this.PlaceShip(player2, player2.aircraftCarrier);
+            this.PlaceShip(player2, player2.submarine);
+            this.PlaceShip(player2, player2.destroyer);
             Console.ReadLine();
             Console.Clear();
             do
             {
                 player1.PlayerGuess(player1, player2, player1.playerBoard);
+                gameOver = IsGameOver(player1, player2);
+                if(gameOver)
+                {
+                    break;
+                }
                 player2.PlayerGuess(player2, player1, player2.playerBoard);
                 gameOver = IsGameOver(player1, player2);
+                if(gameOver)
+                {
+                    break;
+                }
             }
             while (!gameOver);
             Console.WriteLine("Game is over");
             Console.ReadLine();
-            //check input validity
-            //pass ship into ShipPlacement()
-            //
         }
 
 
@@ -103,9 +107,15 @@ namespace BattleShip
             bool isValid = false;
             Console.WriteLine($"{player.name} Enter Starting Location Of {ship.name}");
             string shipPlacement = Console.ReadLine();
+            //TODO: Validate
             Console.WriteLine("Enter Its Orientation: \r\n('Up', 'Down', 'Left', 'Right')");
             string shipOrientation = Console.ReadLine();
+            //TODO: Validate
             isValid = ValidPlacement(ship, player.MoveInterpritation(shipPlacement), shipOrientation);
+            if (player.shipPlacements.Count>0)
+            {
+                isValid = CheckOverlappingShips(player, ship, player.MoveInterpritation(shipPlacement), shipOrientation);
+            }
             if (isValid)
             {
                 player.ShipPlacement(player, ship, shipOrientation, player.MoveInterpritation(shipPlacement));
@@ -126,10 +136,6 @@ namespace BattleShip
 
         public bool ValidPlacement(Ships ship, int[] startLocation, string shipOrientation)
         {
-            Console.Write(startLocation[1]);
-            Console.Write(startLocation[0]);
-            Console.WriteLine();
-
             switch (shipOrientation)
             {
                 case "left":
@@ -160,9 +166,60 @@ namespace BattleShip
                     return false;
             }
         }
+        public bool CheckOverlappingShips(Player player, Ships ship, int[] startLocation, string shipOrientation)
+        {
+            List<int[]> currentPlacement = new List<int[]> { };
+            switch (shipOrientation)
+            {
+                case "left":
+                    for (int i = 0; i < ship.length; i++)
+                    {
+                        int[] nextLocation = new int[] { startLocation[0], startLocation[1] - i };
+                        currentPlacement.Add(nextLocation);
+                    }
+                    break;
+                case "right":
+                    for (
+                        int i = 0; i < ship.length; i++)
+                    {
+                        int[] nextLocation = new int[] { startLocation[0], startLocation[1] + i };
+                        currentPlacement.Add(nextLocation);
+                    }
+                    break;
+                case "up":
+                    for (int i = 0; i < ship.length; i++)
+                    {
+                        int[] nextLocation = new int[] { startLocation[0] - i, startLocation[1] };
+                        currentPlacement.Add(nextLocation);
+                    }
+                    break;
+                case "down":
+                    for (int i = 0; i < ship.length; i++)
+                    {
+                        int[] nextLocation = new int[] { startLocation[0] + i, startLocation[1] };
+                        currentPlacement.Add(nextLocation);
+                    }
+                    break;
+            }
+            for(int i= 0; i<currentPlacement.Count;i++)
+            {
+                for (int j = 0; j<player.shipPlacements.Count; j++)
+                {
+                    if (currentPlacement[i][0] == player.shipPlacements[j][0] && currentPlacement[i][1] == player.shipPlacements[j][1])
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
         public bool IsGameOver(Player player1, Player player2)
         {
-            if (player1.hits.Count == 14 || player2.hits.Count == 14)
+            if(player1.sunkBools[0] == true && player1.sunkBools[1] == true && player1.sunkBools[2] == true && player1.sunkBools[3] == true )
+            {
+                return true;
+            }
+            if (player2.sunkBools[0] == true && player2.sunkBools[1] == true && player2.sunkBools[2] == true && player2.sunkBools[3] == true)
             {
                 return true;
             }

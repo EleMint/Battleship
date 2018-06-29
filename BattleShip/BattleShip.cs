@@ -13,6 +13,7 @@ namespace BattleShip
             name = "Battle Ship";
             length = 4;
             abbreviation = "[B]";
+            hitsOnShip = 0;
         }
     }
 }

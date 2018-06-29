@@ -13,6 +13,7 @@ namespace BattleShip
             name = "Submarine";
             length = 3;
             abbreviation = "[S]";
+            hitsOnShip = 0;
         }
     }
 }

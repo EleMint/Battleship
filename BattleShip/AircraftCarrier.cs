@@ -13,6 +13,7 @@ namespace BattleShip
             name = "Aircraft Carrier";
             length = 5;
             abbreviation = "[A]";
+            hitsOnShip = 0;
         }
     }
 }
