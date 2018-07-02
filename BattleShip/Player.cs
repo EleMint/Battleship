@@ -200,7 +200,7 @@ namespace BattleShip
                 UI.DisplayMiss();
             }
         }
-        public void CheckShipSunk(Player opponent)
+        public virtual void CheckShipSunk(Player opponent)
         {
             if (opponent.battleShip.hitsOnShip==4 && sunkBools[0]==false)
             {

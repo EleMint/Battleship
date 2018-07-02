@@ -11,6 +11,7 @@ namespace BattleShip
         public static void DisplayHit()
         {
             Console.WriteLine("\r\nIT'S A HIT!");
+
         }
         public static void DisplayMiss()
         {
