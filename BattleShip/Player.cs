@@ -87,10 +87,10 @@ namespace BattleShip
         public virtual void PlaceShip(Player player, Ships ship)
         {
             bool isValid = false;
-            Console.WriteLine($"{player.name} Enter Starting Location Of {ship.name}");
+            Console.WriteLine($"\r\n{player.name} Enter Starting Location Of {ship.name}");
             string shipPlacement = Console.ReadLine();
             //TODO: Validate
-            Console.WriteLine("Enter Its Orientation: \r\n('Up', 'Down', 'Left', 'Right')");
+            Console.WriteLine("\r\nEnter Its Orientation: \r\n('Up', 'Down', 'Left', 'Right')");
             string shipOrientation = Console.ReadLine();
             //TODO: Validate
             isValid = Game.ValidPlacement(ship, player.MoveInterpritation(shipPlacement), shipOrientation);
@@ -110,7 +110,7 @@ namespace BattleShip
         }
         public void MakeMove()
         {
-            Console.WriteLine("Please enter a valid move (Example: 'D 12')");
+            Console.WriteLine("\r\nPlease enter a valid move (Example: 'D 12')");
             int[] move = MoveInterpritation(Console.ReadLine());
             opponentBoard.DisplayBoard();
 
@@ -135,14 +135,14 @@ namespace BattleShip
 
         public virtual void PlayerGuess(Player guesser, Player opponent, GameBoard playerBoard)
         {
-            Console.WriteLine($"{guesser.name} Enter A Guess Location:");
+            Console.WriteLine($"\r\n{guesser.name} Enter A Guess Location:");
             string guessMove = Console.ReadLine().ToLower().Trim();
             int[] MoveThing = MoveInterpritation(guessMove);
             for(int i = 0; i<totalGuesses.Count; i++)
             {
                 if(totalGuesses[i] == MoveThing)
                 {
-                    Console.WriteLine("Please enter a valid choice");
+                    Console.WriteLine("\r\nPlease enter a valid choice");
                     PlayerGuess(guesser, opponent, playerBoard);
                 }
                 else
@@ -204,22 +204,22 @@ namespace BattleShip
         {
             if (opponent.battleShip.hitsOnShip==4 && sunkBools[0]==false)
             {
-                Console.WriteLine("You sunk your opponents battleship!");
+                Console.WriteLine("\r\nYou sunk your opponents battleship!");
                 sunkBools[0] = !sunkBools[0];
             }
             else if (opponent.aircraftCarrier.hitsOnShip==5 && sunkBools[1]==false)
             {
-                Console.WriteLine("You sunk your opponents aircraft carrier!");
+                Console.WriteLine("\r\nYou sunk your opponents aircraft carrier!");
                 sunkBools[1] = !sunkBools[1];
             }
             else if (opponent.submarine.hitsOnShip==3 && sunkBools[2]==false)
             {
-                Console.WriteLine("You sunk your opponents submarine");
+                Console.WriteLine("\r\nYou sunk your opponents submarine");
                 sunkBools[2] = !sunkBools[2];
             }
             else if (opponent.destroyer.hitsOnShip==2 && sunkBools[3]==false)
             {
-                Console.WriteLine("You sunk your opponents destroyer!");
+                Console.WriteLine("\r\nYou sunk your opponents destroyer!");
                 sunkBools[3] = !sunkBools[3];
             }
 

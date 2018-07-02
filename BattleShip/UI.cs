@@ -10,11 +10,11 @@ namespace BattleShip
     {
         public static void DisplayHit()
         {
-            Console.WriteLine("IT'S A HIT!");
+            Console.WriteLine("\r\nIT'S A HIT!");
         }
         public static void DisplayMiss()
         {
-            Console.WriteLine("It's A Miss.");
+            Console.WriteLine("\r\nIt's A Miss.");
         }
     }
 }

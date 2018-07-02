@@ -29,7 +29,7 @@ namespace BattleShip
             bool correctMode;
             this.PickGameType();
 
-            Console.WriteLine("\r\nWelcome To: BattleShip");
+            Console.WriteLine("Welcome To: BattleShip");
 
             do
             {
@@ -97,7 +97,7 @@ namespace BattleShip
                 }
             }
             while (!gameOver);
-            Console.WriteLine("Game is over"); 
+            Console.WriteLine("\r\nGame over."); 
             Console.ReadLine();
         }
 
@@ -194,12 +194,12 @@ namespace BattleShip
         {
             if(player1.sunkBools[0] == true && player1.sunkBools[1] == true && player1.sunkBools[2] == true && player1.sunkBools[3] == true )
             {
-                Console.WriteLine($"{player1.name} Won!");
+                Console.WriteLine($"\r\n{player1.name} Won!");
                 return true;
             }
             if (player2.sunkBools[0] == true && player2.sunkBools[1] == true && player2.sunkBools[2] == true && player2.sunkBools[3] == true)
             {
-                Console.WriteLine($"{player2.name} Won!");
+                Console.WriteLine($"\r\n{player2.name} Won!");
                 return true;
             }
             return false;
