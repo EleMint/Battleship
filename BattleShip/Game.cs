@@ -20,7 +20,6 @@ namespace BattleShip
         {
 
         }
-
         // Member Methods
 
         public void RunGame()

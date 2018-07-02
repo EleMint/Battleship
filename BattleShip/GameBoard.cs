@@ -50,6 +50,7 @@ namespace BattleShip
         //}
         public void DisplayBoard()
         {
+            Console.ForegroundColor = ConsoleColor.White;
             for(int i = 0; i <=20; i++)
             {
                 for(int j = 0; j <=20; j++)
@@ -58,6 +59,7 @@ namespace BattleShip
                 }
                 Console.WriteLine();
             }
+            Console.ResetColor();
         }
     }
 }
