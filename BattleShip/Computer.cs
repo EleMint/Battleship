@@ -11,7 +11,7 @@ namespace BattleShip
     {
         // Member Variables
         bool LastGuessHit = false;
-        int[] lastHit;
+        int[] firstHit;
         bool CurrentGuessSequence = false;
         List<int[]> CurrentGuessSequenceHits;
         int CurrentGuessSequenceCounter;
@@ -28,8 +28,6 @@ namespace BattleShip
         
         public override void PlayerGuess(Player guesser, Player opponent, GameBoard playerBoard)
         {
-            int[] place =new int[] {0,0};
-            CurrentGuessSequenceHits.Add(place);
             if (CurrentGuessSequence==false)
             {
                 
@@ -57,16 +55,16 @@ namespace BattleShip
                 switch(CurrentGuessSequenceCounter)
                 {
                     case 0:
-                        MoveThing = new int[2]{ lastHit[0]-1, lastHit[1] };
+                        MoveThing = new int[2]{ firstHit[0]-1, firstHit[1] };
                         break;
                     case 1:
-                        MoveThing = new int[2]{ lastHit[0], lastHit[1] - 1 };
+                        MoveThing = new int[2]{ firstHit[0], firstHit[1] - 1 };
                         break;
                     case 2:
-                        MoveThing = new int[2]{ lastHit[0] + 1, lastHit[1] };
+                        MoveThing = new int[2]{ firstHit[0] + 1, firstHit[1] };
                         break;
                     case 3:
-                        MoveThing = new int[2] { lastHit[0], lastHit[1] + 1 };
+                        MoveThing = new int[2] { firstHit[0], firstHit[1] + 1 };
                         break;
                     default:
                         break;
@@ -84,10 +82,11 @@ namespace BattleShip
                 }
                 else
                 {
-                    linearGuesses = reverseLinearGuesses;
                     reverseLinearGuesses--;
+                    linearGuesses = reverseLinearGuesses;
+                    
                 }
-                MoveThing = new int[] { lastHit[0] - linearGuesses, lastHit[1] };
+                MoveThing = new int[] { firstHit[0] - linearGuesses, firstHit[1] };
                 guesser.HitChecker(MoveThing, guesser, opponent);
                 guesser.CheckShipSunk(opponent);
             }
@@ -99,10 +98,10 @@ namespace BattleShip
                 }
                 else
                 {
-                    linearGuesses = reverseLinearGuesses;
                     reverseLinearGuesses--;
+                    linearGuesses = reverseLinearGuesses;
                 }
-                MoveThing = new int[] { lastHit[0], lastHit[1] - linearGuesses };
+                MoveThing = new int[] { firstHit[0], firstHit[1] - linearGuesses };
                 guesser.HitChecker(MoveThing, guesser, opponent);
                 guesser.CheckShipSunk(opponent);
             }
@@ -114,10 +113,10 @@ namespace BattleShip
                 }
                 else
                 {
-                    linearGuesses = reverseLinearGuesses;
                     reverseLinearGuesses--;
+                    linearGuesses = reverseLinearGuesses;
                 }
-                MoveThing = new int[] { lastHit[0] + linearGuesses, lastHit[1] };
+                MoveThing = new int[] { firstHit[0] + linearGuesses, firstHit[1] };
                 guesser.HitChecker(MoveThing, guesser, opponent);
                 guesser.CheckShipSunk(opponent);
             }
@@ -129,20 +128,17 @@ namespace BattleShip
                 }
                 else
                 {
-                    linearGuesses = reverseLinearGuesses;
                     reverseLinearGuesses--;
+                    linearGuesses = reverseLinearGuesses;
                 }
-                MoveThing = new int[] { lastHit[0], lastHit[1] + linearGuesses };
+                MoveThing = new int[] { firstHit[0], firstHit[1] + linearGuesses };
                 guesser.HitChecker(MoveThing, guesser, opponent);
                 guesser.CheckShipSunk(opponent);
             }
             else
             {
-                LastGuessHit = false;
-                CurrentGuessSequence = false;
-                CurrentGuessSequenceHits.Clear();
-                CurrentGuessSequenceCounter = 0;
-                linearGuesses = 0;
+                shipSunk = false;
+                PlayerGuess(guesser, opponent, playerBoard);
 
             }
             guesser.opponentBoard.DisplayBoard();
@@ -201,7 +197,10 @@ namespace BattleShip
             {
                 if (moveCheck[0] == opponent.shipPlacements[i][0] && moveCheck[1] == opponent.shipPlacements[i][1])
                 {
-                    lastHit = moveCheck;
+                    if (CurrentGuessSequence == false)
+                    {
+                        firstHit = moveCheck;
+                    }
                     LastGuessHit = true;
                     CurrentGuessSequence = true;
                     CurrentGuessSequenceHits.Add(moveCheck);
@@ -252,24 +251,44 @@ namespace BattleShip
                 Console.WriteLine("\r\nYou sunk your opponents battleship!");
                 sunkBools[0] = !sunkBools[0];
                 shipSunk = true;
+                LastGuessHit = false;
+                CurrentGuessSequence = false;
+                CurrentGuessSequenceHits.Clear();
+                CurrentGuessSequenceCounter = 0;
+                linearGuesses = 1;
             }
             else if (opponent.aircraftCarrier.hitsOnShip == 5 && sunkBools[1] == false)
             {
                 Console.WriteLine("\r\nYou sunk your opponents aircraft carrier!");
                 sunkBools[1] = !sunkBools[1];
                 shipSunk = true;
+                LastGuessHit = false;
+                CurrentGuessSequence = false;
+                CurrentGuessSequenceHits.Clear();
+                CurrentGuessSequenceCounter = 0;
+                linearGuesses = 1;
             }
             else if (opponent.submarine.hitsOnShip == 3 && sunkBools[2] == false)
             {
                 Console.WriteLine("\r\nYou sunk your opponents submarine");
                 sunkBools[2] = !sunkBools[2];
                 shipSunk = true;
+                LastGuessHit = false;
+                CurrentGuessSequence = false;
+                CurrentGuessSequenceHits.Clear();
+                CurrentGuessSequenceCounter = 0;
+                linearGuesses = 1;
             }
             else if (opponent.destroyer.hitsOnShip == 2 && sunkBools[3] == false)
             {
                 Console.WriteLine("\r\nYou sunk your opponents destroyer!");
                 sunkBools[3] = !sunkBools[3];
                 shipSunk = true;
+                LastGuessHit = false;
+                CurrentGuessSequence = false;
+                CurrentGuessSequenceHits.Clear();
+                CurrentGuessSequenceCounter = 0;
+                linearGuesses = 1;
             }
         }
         // Member Methods

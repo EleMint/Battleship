@@ -73,13 +73,13 @@ namespace BattleShip
             player1.PlaceShip(player1, player1.submarine);
             player1.PlaceShip(player1, player1.destroyer);;
             Console.ReadLine();
-            Console.Clear();
+            //Console.Clear();
             player2.PlaceShip(player2, player2.battleShip);
             player2.PlaceShip(player2, player2.aircraftCarrier);
             player2.PlaceShip(player2, player2.submarine);
             player2.PlaceShip(player2, player2.destroyer);
             Console.ReadLine();
-            Console.Clear();
+            //Console.Clear();
             do
             {
                 player1.PlayerGuess(player1, player2, player1.playerBoard);
