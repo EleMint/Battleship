@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BattleShip
 {
-    class Game
+    public class Game
     {
         // Member Variables
         public Player player1;
@@ -110,7 +110,7 @@ namespace BattleShip
             gameBoard1.DisplayBoard();
         }
 
-        static public bool ValidPlacement(Ships ship, int[] startLocation, string shipOrientation)
+        public static bool ValidPlacement(Ships ship, int[] startLocation, string shipOrientation)
         {
             switch (shipOrientation)
             {
