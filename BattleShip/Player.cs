@@ -119,18 +119,51 @@ namespace BattleShip
 
         public int[] MoveInterpritation(string guessLocation)
         {
-            int moveX = 0;
-            string[] move = guessLocation.Trim().ToLower().Split(' ');
-            int moveY = int.Parse(move[1]);
-            for (int i = 0; i < xAxis.Count; i++)
+            int moveX;
+            int moveY;
+            try
             {
-                if (move[0] == xAxis[i])
+                try
                 {
-                    moveX = i + 1;
+                    moveX = 0;
+                    string[] move = guessLocation.Trim().ToLower().Split(' ');
+                    moveY = int.Parse(move[1]);
+                    for (int i = 0; i < xAxis.Count; i++)
+                    {
+                        if (move[0] == xAxis[i])
+                        {
+                            moveX = i + 1;
+                        }
+                    }
+                    int[] moves = new int[] { moveY, moveX };
+                    return moves;
+                }
+                catch
+                {
+                    moveX = 0;
+                    char[] move = guessLocation.ToCharArray();
+                    if (move.Length > 2)
+                    {
+                        string char1 = move[1].ToString();
+                        string char2 = move[2].ToString();
+                        string joinedChars = String.Join(char1, char2);
+                        moveY = int.Parse(joinedChars);
+                    }
+                    else
+                        moveY = int.Parse(move[1].ToString());
+                    int[] moves = new int[] { moveY, moveX };
+                    return moves;
                 }
             }
-            int[] moves = new int[] { moveY, moveX };
-            return moves;
+            catch
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Enter A Valid Ship Location");
+                Console.ResetColor();
+                string newLocation = Console.ReadLine();
+                return MoveInterpritation(newLocation);
+            }
+           
         }
 
         public virtual void PlayerGuess(Player guesser, Player opponent, GameBoard playerBoard)
