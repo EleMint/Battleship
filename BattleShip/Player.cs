@@ -167,23 +167,7 @@ namespace BattleShip
                     guesser.opponentBoard.gameBoard[moveCheck[0], moveCheck[1]] = "[X]";
                     opponent.playerBoard.gameBoard[moveCheck[0], moveCheck[1]] = "[X]";
                     int shipPosition = i;
-                    if (0<=shipPosition && shipPosition<=3)
-                    {
-                        opponent.battleShip.hitsOnShip++;
-                    }
-                    else if (4<=shipPosition && shipPosition<=8)
-                    {
-                        opponent.aircraftCarrier.hitsOnShip++;
-                    }
-                    else if (9<= shipPosition && shipPosition<=11)
-                    {
-                        opponent.submarine.hitsOnShip++;
-                    }
-                    else
-                    {
-                        opponent.destroyer.hitsOnShip++;
-                    }
-                    
+                    AddHitOnShip(opponent, shipPosition);
                     UI.DisplayHit();
                     ishit = true;
                     break;
@@ -198,6 +182,25 @@ namespace BattleShip
             if (!ishit)
             {
                 UI.DisplayMiss();
+            }
+        }
+        public virtual void AddHitOnShip(Player opponent, int shipPosition)
+        {
+            if (0 <= shipPosition && shipPosition <= 3)
+            {
+                opponent.battleShip.hitsOnShip++;
+            }
+            else if (4 <= shipPosition && shipPosition <= 8)
+            {
+                opponent.aircraftCarrier.hitsOnShip++;
+            }
+            else if (9 <= shipPosition && shipPosition <= 11)
+            {
+                opponent.submarine.hitsOnShip++;
+            }
+            else
+            {
+                opponent.destroyer.hitsOnShip++;
             }
         }
         public virtual void CheckShipSunk(Player opponent)
