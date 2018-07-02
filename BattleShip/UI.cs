@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BattleShip
 {
-    static class UI
+    public static class UI
     {
         public static void DisplayHit()
         {
