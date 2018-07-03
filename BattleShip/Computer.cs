@@ -240,22 +240,42 @@ namespace BattleShip
 
         public int[] FourSquareGuess()
         {
-            if (firstHit[0] - 1 < 1 || firstHit[0] + 1 > 20 || firstHit[1] - 1 < 1 || firstHit[1] + 1 > 20)
-            {
-                CurrentGuessSequenceCounter++;
-            }
+            //if (firstHit[0] - 1 < 1 || firstHit[0] + 1 > 20 || firstHit[1] - 1 < 1 || firstHit[1] + 1 > 20)
+            //{
+            //    CurrentGuessSequenceCounter++;
+            //}
             switch (CurrentGuessSequenceCounter)
             {
                 case 0:
+                    if (firstHit[0]-1 <1)
+                    {
+                        CurrentGuessSequenceCounter++;
+                        FourSquareGuess();
+                    }
                     MoveThing = new int[2] { firstHit[0] - 1, firstHit[1] };
                     break;
                 case 1:
+                    if (firstHit[1] - 1 < 1)
+                    {
+                        CurrentGuessSequenceCounter++;
+                        FourSquareGuess();
+                    }
                     MoveThing = new int[2] { firstHit[0], firstHit[1] - 1 };
                     break;
                 case 2:
+                    if (firstHit[0] + 1 < 20)
+                    {
+                        CurrentGuessSequenceCounter++;
+                        FourSquareGuess();
+                    }
                     MoveThing = new int[2] { firstHit[0] + 1, firstHit[1] };
                     break;
                 case 3:
+                    if (firstHit[1] + 1 < 20)
+                    {
+                        CurrentGuessSequenceCounter++;
+                        FourSquareGuess();
+                    }
                     MoveThing = new int[2] { firstHit[0], firstHit[1] + 1 };
                     break;
                 default:
@@ -270,7 +290,16 @@ namespace BattleShip
         {
             if (LastGuessHit)
             {
-                linearGuesses++;
+                if (linearGuesses >= 0)
+                {
+                    linearGuesses++;
+                }
+                else
+                {
+                    linearGuesses--;
+                }
+                
+
             }
             else
             {
@@ -290,9 +319,14 @@ namespace BattleShip
         public int[] HorizontalLeftGuess()
         {
             if (LastGuessHit)
-            {
-                linearGuesses++;
-            }
+                if (linearGuesses >= 0)
+                {
+                    linearGuesses++;
+                }
+                else
+                {
+                    linearGuesses--;
+                }
             else
             {
                 reverseLinearGuesses--;
