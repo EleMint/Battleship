@@ -15,11 +15,10 @@ namespace BattleShip
         public GameBoard player2GameBoard;
         public bool gameOver;
         public static Random rng = new Random();
-        static public List<int[]> currentPlacement;
         // Constructor
         public Game()
         {
-            currentPlacement = new List<int[]> { };
+           
         }
         // Member Methods
 
@@ -145,7 +144,7 @@ namespace BattleShip
         }
         static public bool CheckOverlappingShips(Player player, Ships ship, int[] startLocation, string shipOrientation)
         {
-            
+            List<int[]> currentPlacement = new List<int[]> { };
             switch (shipOrientation)
             {
                 case "left":

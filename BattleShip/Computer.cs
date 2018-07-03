@@ -240,6 +240,10 @@ namespace BattleShip
 
         public int[] FourSquareGuess()
         {
+            if (firstHit[0] - 1 < 1 || firstHit[0] + 1 > 20 || firstHit[1] - 1 < 1 || firstHit[1] + 1 > 20)
+            {
+                CurrentGuessSequenceCounter++;
+            }
             switch (CurrentGuessSequenceCounter)
             {
                 case 0:
@@ -258,11 +262,7 @@ namespace BattleShip
                     break;
 
             }
-            //if (firstHit[0]-1<1 || firstHit[0]+1 > 20 || firstHit[1]-1<1 ||firstHit[1]+1>20)
-            //{
-            //    CurrentGuessSequenceCounter++;
-            //    FourSquareGuess();
-            //}
+            
             return MoveThing;
         }
 
