@@ -11,12 +11,13 @@ namespace BattleShip
     {
         public static void DisplayHit()
         {
-            Console.WriteLine("\r\nIT'S A HIT!");
-
+            Console.ReadLine();
+            Console.WriteLine("\r\nIT'S A HIT!\r\n");
         }
         public static void DisplayMiss()
         {
-            Console.WriteLine("\r\nIt's A Miss.");
+            Console.ReadLine();
+            Console.WriteLine("\r\nIt's A Miss.\r\n");
         }
         public static string ShipLocationInterpretation(Player player, Ships ship, string userStartLocation)
         {

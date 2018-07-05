@@ -15,6 +15,7 @@ namespace BattleShip
         public GameBoard player2GameBoard;
         public bool gameOver;
         public static Random rng = new Random();
+        public static int numberOfComputers;
         // Constructor
         public Game()
         {
@@ -24,9 +25,8 @@ namespace BattleShip
 
         public void RunGame()
         {
-            int numberOfComputers;
             bool correctMode;
-            this.PickGameType();
+            CreateGameBoard();
 
             Console.WriteLine("Welcome To: BattleShip");
 
@@ -71,15 +71,14 @@ namespace BattleShip
             player1.PlaceShip(player1, player1.battleShip);
             player1.PlaceShip(player1, player1.aircraftCarrier);
             player1.PlaceShip(player1, player1.submarine);
-            player1.PlaceShip(player1, player1.destroyer);;
-            Console.ReadLine();
-            //Console.Clear();
+            player1.PlaceShip(player1, player1.destroyer);
+            ClearForNumberOfComputers();
+            if (numberOfComputers == 1) Console.WriteLine("The Computer Picked");
             player2.PlaceShip(player2, player2.battleShip);
             player2.PlaceShip(player2, player2.aircraftCarrier);
             player2.PlaceShip(player2, player2.submarine);
             player2.PlaceShip(player2, player2.destroyer);
-            Console.ReadLine();
-            //Console.Clear();
+            ClearForNumberOfComputers();
             do
             {
                 player1.PlayerGuess(player1, player2, player1.playerBoard);
@@ -96,18 +95,24 @@ namespace BattleShip
                 }
             }
             while (!gameOver);
-            Console.WriteLine("\r\nGame over."); 
             Console.ReadLine();
         }
+        public void ClearForNumberOfComputers()
+        {
+            if(numberOfComputers == 0)
+            {
+                Console.ReadLine();
+                Console.Clear();
+            }
+            else if(numberOfComputers == 1 || numberOfComputers == 2)
+            {
+                Console.ReadLine();
+            }
 
-
-        
-
-
-        public void PickGameType()
+        }
+        public void CreateGameBoard()
         {
             GameBoard gameBoard1 = new GameBoard();
-            gameBoard1.DisplayBoard();
         }
 
         public static bool ValidPlacement(Ships ship, int[] startLocation, string shipOrientation)

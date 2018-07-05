@@ -58,7 +58,7 @@ namespace BattleShip
             }
             guesser.HitChecker(MoveThing, guesser, opponent);
             guesser.CheckShipSunk(opponent);
-            guesser.opponentBoard.DisplayBoard();
+            guesser.opponentBoard.DisplayBoard(guesser);
 
         }
         public override void PlaceShip(Player player, Ships ship)
@@ -99,7 +99,10 @@ namespace BattleShip
             if (isValid)
             {
                 player.ShipPlacement(player, ship, shipOrientation, randomStartLocation);
-                player.playerBoard.DisplayBoard();
+                if(Game.numberOfComputers == 2)
+                {
+                    player.playerBoard.DisplayBoard(player);
+                }
             }
             else
             {

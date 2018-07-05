@@ -40,25 +40,40 @@ namespace BattleShip
                 { "20 ","[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]" }
             };
         }
-
-
-        // Member Methods
-        //public bool Equals(int[] int1, int[] int2)
-        //{
-        //    Console.WriteLine("This is the equals overload");
-        //    return true;
-        //}
-        public void DisplayBoard()
+        
+        public void DisplayBoard(Player player)
         {
             for(int i = 0; i <=20; i++)
             {
                 for(int j = 0; j <=20; j++)
                 {
                     Console.Write(gameBoard[i, j]);
+                    if(i == 0 && j == 20)
+                    {
+                        if(player.sunkBools[0] == true || player.sunkBools[1] == true || player.sunkBools[2] == true || player.sunkBools[3] == true)
+                        {
+                            Console.Write("    Sunk Ships:");
+                        }
+                    }
+                    if(i == 2 && j == 20 && player.sunkBools[0] == true)
+                    {
+                        Console.Write("    Battle Ship");
+                    }
+                    if (i == 3 && j == 20 && player.sunkBools[1] == true)
+                    {
+                        Console.Write("    Aircraft Carrier");
+                    }
+                    if (i == 4 && j == 20 && player.sunkBools[2] == true)
+                    {
+                        Console.Write("    Submarine");
+                    }
+                    if (i == 5 && j == 20 && player.sunkBools[3] == true)
+                    {
+                        Console.Write("    Destroyer");
+                    }
                 }
                 Console.WriteLine();
             }
-            Console.ResetColor();
         }
     }
 }
