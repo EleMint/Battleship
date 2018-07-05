@@ -10,14 +10,14 @@ namespace BattleShip
     public class Player
     {
         // Member Variables
-        public string name;
+        public string name { get; set; }
         public GameBoard playerBoard;
         public GameBoard opponentBoard;
         public Ships battleShip;
         public Ships destroyer;
         public Ships aircraftCarrier;
         public Ships submarine;
-        public bool[] sunkBools;
+        public bool[] sunkBools { get; set; }
         public List<int[]> shipPlacements;
         public List<string> xAxis = new List<string>
         {
@@ -39,7 +39,6 @@ namespace BattleShip
             shipPlacements = new List<int[]> { };
             hits = new List<int[]> { };
             sunkBools = new bool[4] { false, false, false, false };
-
         }
         // Member Methods
         public virtual void ShipPlacement(Player guesser, Ships ship, string shipOrientation, int[] startLocation)
@@ -87,12 +86,11 @@ namespace BattleShip
         public virtual void PlaceShip(Player player, Ships ship)
         {
             bool isValid = false;
-            Console.WriteLine($"\r\n{player.name} Enter Starting Location Of {ship.name}");
-            string shipPlacement = Console.ReadLine();
-            //TODO: Validate
+            Console.WriteLine($"\r\n{player.name}, Enter Starting Location Of {ship.name}");
+            string shipPlacement = Console.ReadLine().ToLower().Trim();
+            shipPlacement = UI.ShipLocationInterpretation(player, ship, shipPlacement);
             Console.WriteLine("\r\nEnter Its Orientation: \r\n('Up', 'Down', 'Left', 'Right')");
             string shipOrientation = Console.ReadLine();
-            //TODO: Validate
             isValid = Game.ValidPlacement(ship, player.MoveInterpritation(shipPlacement), shipOrientation);
             if (player.shipPlacements.Count > 0 && isValid == true)
             {
@@ -101,20 +99,12 @@ namespace BattleShip
             if (isValid)
             {
                 player.ShipPlacement(player, ship, shipOrientation, player.MoveInterpritation(shipPlacement));
-                player.playerBoard.DisplayBoard();
+                player.playerBoard.DisplayBoard(player);
             }
             else
             {
-                this.PlaceShip(player, ship);
+                PlaceShip(player, ship);
             }
-        }
-        public void MakeMove()
-        {
-            Console.WriteLine("\r\nPlease enter a valid move (Example: 'D 12')");
-            int[] move = MoveInterpritation(Console.ReadLine());
-            opponentBoard.DisplayBoard();
-
-
         }
 
         public int[] MoveInterpritation(string guessLocation)
@@ -172,9 +162,7 @@ namespace BattleShip
             }
             catch
             {
-                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Enter A Valid Ship Location");
-                Console.ResetColor();
                 string newLocation = Console.ReadLine();
                 return MoveInterpritation(newLocation);
             }
@@ -183,8 +171,9 @@ namespace BattleShip
 
         public virtual void PlayerGuess(Player guesser, Player opponent, GameBoard playerBoard)
         {
-            Console.WriteLine($"\r\n{guesser.name} Enter A Guess Location:");
+            Console.WriteLine($"\r\n{guesser.name}, Enter A Guess Location:");
             string guessMove = Console.ReadLine().ToLower().Trim();
+            guessMove = UI.GuessMoveInterpretation(guessMove, guesser, opponent, playerBoard);
             int[] MoveThing = MoveInterpritation(guessMove);
             for (int i = 0; i < totalGuesses.Count; i++)
             {
@@ -201,7 +190,7 @@ namespace BattleShip
             }
             guesser.HitChecker(MoveThing, guesser, opponent);
             guesser.CheckShipSunk(opponent);
-            guesser.opponentBoard.DisplayBoard();
+            guesser.opponentBoard.DisplayBoard(guesser);
         }
 
         public virtual void HitChecker(int[] moveCheck, Player guesser, Player opponent)
@@ -212,8 +201,10 @@ namespace BattleShip
                 if (moveCheck[0] == opponent.shipPlacements[i][0] && moveCheck[1] == opponent.shipPlacements[i][1])
                 {
                     guesser.hits.Add(moveCheck);
+                    Console.ForegroundColor = ConsoleColor.Red;
                     guesser.opponentBoard.gameBoard[moveCheck[0], moveCheck[1]] = "[X]";
                     opponent.playerBoard.gameBoard[moveCheck[0], moveCheck[1]] = "[X]";
+                    Console.ResetColor();
                     int shipPosition = i;
                     AddHitOnShip(opponent, shipPosition);
                     UI.DisplayHit();
@@ -222,8 +213,10 @@ namespace BattleShip
                 }
                 else
                 {
+                    Console.ForegroundColor = ConsoleColor.White;
                     guesser.opponentBoard.gameBoard[moveCheck[0], moveCheck[1]] = "[O]";
                     opponent.playerBoard.gameBoard[moveCheck[0], moveCheck[1]] = "[O]";
+                    Console.ResetColor();
                 }
 
             }
