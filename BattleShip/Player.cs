@@ -17,7 +17,7 @@ namespace BattleShip
         public Ships destroyer;
         public Ships aircraftCarrier;
         public Ships submarine;
-        public bool[] sunkBools; 
+        public bool[] sunkBools;
         public List<int[]> shipPlacements;
         public List<string> xAxis = new List<string>
         {
@@ -50,7 +50,7 @@ namespace BattleShip
                 case "left":
                     for (int i = 0; i < ship.length; i++)
                     {
-                        int[] nextLocation = new int[] {startLocation[0], startLocation[1]-i};
+                        int[] nextLocation = new int[] { startLocation[0], startLocation[1] - i };
                         playerBoard.gameBoard[nextLocation[0], nextLocation[1]] = ship.abbreviation;
                         guesser.shipPlacements.Add(nextLocation);
                     }
@@ -59,7 +59,7 @@ namespace BattleShip
                     for (
                         int i = 0; i < ship.length; i++)
                     {
-                        int[] nextLocation = new int[] { startLocation[0], startLocation[1]+i};
+                        int[] nextLocation = new int[] { startLocation[0], startLocation[1] + i };
                         playerBoard.gameBoard[nextLocation[0], nextLocation[1]] = ship.abbreviation;
                         guesser.shipPlacements.Add(nextLocation);
                     }
@@ -67,7 +67,7 @@ namespace BattleShip
                 case "up":
                     for (int i = 0; i < ship.length; i++)
                     {
-                        int[] nextLocation = new int[] { startLocation[0]-i, startLocation[1]};
+                        int[] nextLocation = new int[] { startLocation[0] - i, startLocation[1] };
                         playerBoard.gameBoard[nextLocation[0], nextLocation[1]] = ship.abbreviation;
                         guesser.shipPlacements.Add(nextLocation);
                     }
@@ -75,7 +75,7 @@ namespace BattleShip
                 case "down":
                     for (int i = 0; i < ship.length; i++)
                     {
-                        int[] nextLocation = new int[] { startLocation[0] + i, startLocation[1]};
+                        int[] nextLocation = new int[] { startLocation[0] + i, startLocation[1] };
                         playerBoard.gameBoard[nextLocation[0], nextLocation[1]] = ship.abbreviation;
                         guesser.shipPlacements.Add(nextLocation);
                     }
@@ -87,11 +87,12 @@ namespace BattleShip
         public virtual void PlaceShip(Player player, Ships ship)
         {
             bool isValid = false;
-            Console.WriteLine($"\r\n{player.name}, Enter Starting Location Of {ship.name}");
-            string shipPlacement = Console.ReadLine().ToLower().Trim();
-            shipPlacement = UI.ShipLocationInterpretation(player, ship, shipPlacement);
+            Console.WriteLine($"\r\n{player.name} Enter Starting Location Of {ship.name}");
+            string shipPlacement = Console.ReadLine();
+            //TODO: Validate
             Console.WriteLine("\r\nEnter Its Orientation: \r\n('Up', 'Down', 'Left', 'Right')");
             string shipOrientation = Console.ReadLine();
+            //TODO: Validate
             isValid = Game.ValidPlacement(ship, player.MoveInterpritation(shipPlacement), shipOrientation);
             if (player.shipPlacements.Count > 0 && isValid == true)
             {
@@ -104,8 +105,16 @@ namespace BattleShip
             }
             else
             {
-                PlaceShip(player, ship);
+                this.PlaceShip(player, ship);
             }
+        }
+        public void MakeMove()
+        {
+            Console.WriteLine("\r\nPlease enter a valid move (Example: 'D 12')");
+            int[] move = MoveInterpritation(Console.ReadLine());
+            opponentBoard.DisplayBoard();
+
+
         }
 
         public int[] MoveInterpritation(string guessLocation)
@@ -130,7 +139,7 @@ namespace BattleShip
                 }
                 catch
                 {
-                    
+
                     char[] move = guessLocation.ToCharArray();
                     if (move.Length > 2)
                     {
@@ -169,18 +178,17 @@ namespace BattleShip
                 string newLocation = Console.ReadLine();
                 return MoveInterpritation(newLocation);
             }
-           
+
         }
 
         public virtual void PlayerGuess(Player guesser, Player opponent, GameBoard playerBoard)
         {
-            Console.WriteLine($"\r\n{guesser.name}, Enter A Guess Location:");
+            Console.WriteLine($"\r\n{guesser.name} Enter A Guess Location:");
             string guessMove = Console.ReadLine().ToLower().Trim();
-            guessMove = UI.GuessMoveInterpretation(guessMove, guesser, opponent, playerBoard);
             int[] MoveThing = MoveInterpritation(guessMove);
-            for(int i = 0; i<totalGuesses.Count; i++)
+            for (int i = 0; i < totalGuesses.Count; i++)
             {
-                if(totalGuesses[i] == MoveThing)
+                if (totalGuesses[i] == MoveThing)
                 {
                     Console.WriteLine("\r\nPlease enter a valid choice");
                     PlayerGuess(guesser, opponent, playerBoard);
@@ -199,7 +207,7 @@ namespace BattleShip
         public virtual void HitChecker(int[] moveCheck, Player guesser, Player opponent)
         {
             bool ishit = false;
-            for(int i = 0; i < opponent.shipPlacements.Count; i++)
+            for (int i = 0; i < opponent.shipPlacements.Count; i++)
             {
                 if (moveCheck[0] == opponent.shipPlacements[i][0] && moveCheck[1] == opponent.shipPlacements[i][1])
                 {
@@ -245,22 +253,22 @@ namespace BattleShip
         }
         public virtual void CheckShipSunk(Player opponent)
         {
-            if (opponent.battleShip.hitsOnShip==4 && sunkBools[0]==false)
+            if (opponent.battleShip.hitsOnShip == 4 && sunkBools[0] == false)
             {
                 Console.WriteLine("\r\nYou sunk your opponents battleship!");
                 sunkBools[0] = !sunkBools[0];
             }
-            else if (opponent.aircraftCarrier.hitsOnShip==5 && sunkBools[1]==false)
+            else if (opponent.aircraftCarrier.hitsOnShip == 5 && sunkBools[1] == false)
             {
                 Console.WriteLine("\r\nYou sunk your opponents aircraft carrier!");
                 sunkBools[1] = !sunkBools[1];
             }
-            else if (opponent.submarine.hitsOnShip==3 && sunkBools[2]==false)
+            else if (opponent.submarine.hitsOnShip == 3 && sunkBools[2] == false)
             {
                 Console.WriteLine("\r\nYou sunk your opponents submarine");
                 sunkBools[2] = !sunkBools[2];
             }
-            else if (opponent.destroyer.hitsOnShip==2 && sunkBools[3]==false)
+            else if (opponent.destroyer.hitsOnShip == 2 && sunkBools[3] == false)
             {
                 Console.WriteLine("\r\nYou sunk your opponents destroyer!");
                 sunkBools[3] = !sunkBools[3];
