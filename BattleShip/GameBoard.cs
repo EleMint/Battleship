@@ -47,7 +47,23 @@ namespace BattleShip
             {
                 for(int j = 0; j <=20; j++)
                 {
-                    Console.Write(gameBoard[i, j]);
+                    if(gameBoard[i,j] == "[X]")
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(gameBoard[i, j]);
+                        Console.ResetColor();
+                    }
+                    else if(gameBoard[i,j] == "[O]")
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write(gameBoard[i, j]);
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.Write(gameBoard[i, j]);
+                    }
+                    
                     if(i == 0 && j == 20)
                     {
                         if(player.sunkBools[0] == true || player.sunkBools[1] == true || player.sunkBools[2] == true || player.sunkBools[3] == true)
