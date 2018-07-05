@@ -87,12 +87,11 @@ namespace BattleShip
         public virtual void PlaceShip(Player player, Ships ship)
         {
             bool isValid = false;
-            Console.WriteLine($"\r\n{player.name} Enter Starting Location Of {ship.name}");
-            string shipPlacement = Console.ReadLine();
-            //TODO: Validate
+            Console.WriteLine($"\r\n{player.name}, Enter Starting Location Of {ship.name}");
+            string shipPlacement = Console.ReadLine().ToLower().Trim();
+            shipPlacement = UI.ShipLocationInterpretation(player, ship, shipPlacement);
             Console.WriteLine("\r\nEnter Its Orientation: \r\n('Up', 'Down', 'Left', 'Right')");
             string shipOrientation = Console.ReadLine();
-            //TODO: Validate
             isValid = Game.ValidPlacement(ship, player.MoveInterpritation(shipPlacement), shipOrientation);
             if (player.shipPlacements.Count > 0 && isValid == true)
             {
@@ -105,16 +104,8 @@ namespace BattleShip
             }
             else
             {
-                this.PlaceShip(player, ship);
+                PlaceShip(player, ship);
             }
-        }
-        public void MakeMove()
-        {
-            Console.WriteLine("\r\nPlease enter a valid move (Example: 'D 12')");
-            int[] move = MoveInterpritation(Console.ReadLine());
-            opponentBoard.DisplayBoard();
-
-
         }
 
         public int[] MoveInterpritation(string guessLocation)
@@ -183,8 +174,9 @@ namespace BattleShip
 
         public virtual void PlayerGuess(Player guesser, Player opponent, GameBoard playerBoard)
         {
-            Console.WriteLine($"\r\n{guesser.name} Enter A Guess Location:");
+            Console.WriteLine($"\r\n{guesser.name}, Enter A Guess Location:");
             string guessMove = Console.ReadLine().ToLower().Trim();
+            guessMove = UI.GuessMoveInterpretation(guessMove, guesser, opponent, playerBoard);
             int[] MoveThing = MoveInterpritation(guessMove);
             for(int i = 0; i<totalGuesses.Count; i++)
             {
