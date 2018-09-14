@@ -17,5 +17,3 @@ namespace BattleShip
         }
     }
 }
-
-//comment

@@ -9,7 +9,6 @@ namespace BattleShip
 {
     class Computer : Player
     {
-        // Member Variables
         bool LastGuessHit = false;
         int[] firstHit;
         bool CurrentGuessSequence = false;
@@ -19,7 +18,7 @@ namespace BattleShip
         int linearGuesses = 1;
         int reverseLinearGuesses = 0;
         bool shipSunk = false;
-        // Constructor
+
         public Computer(string name)
         {
             this.name = name;
@@ -189,7 +188,6 @@ namespace BattleShip
                 CurrentGuessSequenceCounter = 0;
                 linearGuesses = 1;
                 reverseLinearGuesses = 0;
-
             }
             else if (opponent.submarine.hitsOnShip == 3 && sunkBools[2] == false)
             {
@@ -201,7 +199,6 @@ namespace BattleShip
                 CurrentGuessSequenceCounter = 0;
                 linearGuesses = 1;
                 reverseLinearGuesses = 0;
-
             }
             else if (opponent.destroyer.hitsOnShip == 2 && sunkBools[3] == false)
             {
@@ -213,17 +210,11 @@ namespace BattleShip
                 CurrentGuessSequenceCounter = 0;
                 linearGuesses = 1;
                 reverseLinearGuesses = 0;
-
             }
         }
-        // Member Methods
-        //public override void PickShipsLocation(string shipName, int shipLength)
-        //{
 
-        //}
         public int[] RandomGuess()
         {
-
             int xAxis = Game.rng.Next(1, 21);
             int yAxis = Game.rng.Next(1, 21);
             MoveThing = new int[2] { xAxis, yAxis };
@@ -236,15 +227,12 @@ namespace BattleShip
                         RandomGuess();
                     }
                 }
-
             }
             return MoveThing;
         }
 
         public int[] FourSquareGuess()
-
         {
-         
             switch (CurrentGuessSequenceCounter)
             {
                 case 0:
@@ -285,9 +273,7 @@ namespace BattleShip
                     break;
                 default:
                     break;
-
             }
-            
             return MoveThing;
         }
 
@@ -308,14 +294,11 @@ namespace BattleShip
                 {
                     linearGuesses--;
                 }
-                
-
             }
             else
             {
                 reverseLinearGuesses--;
                 linearGuesses = reverseLinearGuesses;
-
             }
             MoveThing = new int[] { firstHit[0] - linearGuesses, firstHit[1] };
             return MoveThing;

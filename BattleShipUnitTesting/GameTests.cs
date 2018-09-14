@@ -149,10 +149,3 @@ namespace BattleShipUnitTesting
         }
     }
 }
-    
-
-
-
-// Arrange
-// Act
-// Assert

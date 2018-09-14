@@ -9,10 +9,7 @@ namespace BattleShip
     public class GameBoard
     {
         public string[,] gameBoard;
-        // Member Variables
-
-
-        // Constructor
+        
         public GameBoard()
         {
             gameBoard = new string[,]

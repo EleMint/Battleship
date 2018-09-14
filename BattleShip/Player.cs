@@ -9,7 +9,6 @@ namespace BattleShip
 {
     public class Player
     {
-        // Member Variables
         public string name { get; set; }
         public GameBoard playerBoard;
         public GameBoard opponentBoard;
@@ -26,7 +25,6 @@ namespace BattleShip
         public List<int[]> totalGuesses;
         public List<int[]> hits;
 
-        // Constructor
         public Player()
         {
             playerBoard = new GameBoard();
@@ -40,7 +38,7 @@ namespace BattleShip
             hits = new List<int[]> { };
             sunkBools = new bool[4] { false, false, false, false };
         }
-        // Member Methods
+
         public virtual void ShipPlacement(Player guesser, Ships ship, string shipOrientation, int[] startLocation)
         {
             playerBoard.gameBoard[startLocation[0], startLocation[1]] = ship.abbreviation;
@@ -83,6 +81,7 @@ namespace BattleShip
                     break;
             }
         }
+
         public virtual void PlaceShip(Player player, Ships ship)
         {
             bool isValid = false;
@@ -129,7 +128,6 @@ namespace BattleShip
                 }
                 catch
                 {
-
                     char[] move = guessLocation.ToCharArray();
                     if (move.Length > 2)
                     {
@@ -166,7 +164,6 @@ namespace BattleShip
                 string newLocation = Console.ReadLine();
                 return MoveInterpritation(newLocation);
             }
-
         }
 
         public virtual void PlayerGuess(Player guesser, Player opponent, GameBoard playerBoard)
@@ -185,7 +182,6 @@ namespace BattleShip
                 else
                 {
                     totalGuesses.Add(MoveThing);
-
                 }
             }
             guesser.HitChecker(MoveThing, guesser, opponent);
@@ -218,7 +214,6 @@ namespace BattleShip
                     opponent.playerBoard.gameBoard[moveCheck[0], moveCheck[1]] = "[O]";
                     Console.ResetColor();
                 }
-
             }
             if (!ishit)
             {

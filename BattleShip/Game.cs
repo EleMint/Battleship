@@ -8,7 +8,6 @@ namespace BattleShip
 {
     public class Game
     {
-        // Member Variables
         public Player player1;
         public Player player2;
         public GameBoard player1GameBoard;
@@ -16,20 +15,17 @@ namespace BattleShip
         public bool gameOver;
         public static Random rng = new Random();
         public static int numberOfComputers;
-        // Constructor
+
         public Game()
         {
            
         }
-        // Member Methods
 
         public void RunGame()
         {
             bool correctMode;
             CreateGameBoard();
-
             Console.WriteLine("Welcome To: BattleShip");
-
             do
             {
                 Console.WriteLine("\r\n" + "Press '1' for Single-Player, '2' for Multi-Player, or '3' for A Show Down Between Computers.");
@@ -108,7 +104,6 @@ namespace BattleShip
             {
                 Console.ReadLine();
             }
-
         }
         public void CreateGameBoard()
         {
@@ -147,7 +142,8 @@ namespace BattleShip
                     return false;
             }
         }
-        static public bool CheckOverlappingShips(Player player, Ships ship, int[] startLocation, string shipOrientation)
+
+        public static bool CheckOverlappingShips(Player player, Ships ship, int[] startLocation, string shipOrientation)
         {
             List<int[]> currentPlacement = new List<int[]> { };
             switch (shipOrientation)
@@ -194,6 +190,7 @@ namespace BattleShip
             }
             return true;
         }
+
         public bool IsGameOver(Player player1, Player player2)
         {
             if(player1.sunkBools[0] == true && player1.sunkBools[1] == true && player1.sunkBools[2] == true && player1.sunkBools[3] == true )

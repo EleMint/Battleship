@@ -8,9 +8,6 @@ namespace BattleShip
 {
     class Human : Player
     {
-        // Member Variables
-
-        // Constructor
         public Human(string name)
         {
             this.name = name;
